@@ -15,6 +15,13 @@ const ButtonsRow = styled.div`
     justify-content: start;
 `
 
+const Warning = styled.div`
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: 70px;
+`
+
 const Cards = () => {
     const {id} = useParams()
     const [addModalVisible, setAddModalVisible] = useState(false) 
@@ -40,6 +47,7 @@ const Cards = () => {
         }
         const newCollection = {...currentCollection, cards: [...cards, card]}
         localStorage.setItem(id, JSON.stringify(newCollection))
+        setCurrentCollection({...currentCollection, cards: [...cards, card]})
         setCards([...cards, card])
         setAddModalVisible(false)
         setFront('')
@@ -58,10 +66,7 @@ const Cards = () => {
             const dateRepeat = getRepeatDates()
             localStorage.setItem(id, JSON.stringify({...currentCollection, repeat: dateRepeat}))
             navigate('/collection')
-        } else {
-            console.log('lol')
         }
-        
     }
     
   return (
@@ -74,6 +79,7 @@ const Cards = () => {
             addNewCard={addNewCard}
             />
         </ModalWindow>
+
         <ButtonsRow>
             <MButton 
             initial={{opacity: 0}} 
@@ -105,19 +111,28 @@ const Cards = () => {
             }
             
         </ButtonsRow>
-        <Carusel 
-        items={
-            shuffledCards.length === 0 ? 
-            cards : 
-            shuffledCards
+        {
+            cards.length !== 0 ?
+            <Carusel 
+            items={
+                shuffledCards.length === 0 ? 
+                cards : 
+                shuffledCards
+            }
+            position={position}
+            setPosition={setPosition}
+            face={face}
+            setFace={setFace}
+            /> : 
+            <Warning>
+                Add new card
+            </Warning>
         }
-        position={position}
-        setPosition={setPosition}
-        face={face}
-        setFace={setFace}
-        />
+        
     </>
   )
 }
+
+
 
 export default Cards
