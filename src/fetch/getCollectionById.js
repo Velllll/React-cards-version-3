@@ -5,5 +5,4 @@ export const getCollectionById = (id) => {
     } else {
         return collection
     }
-    
 }

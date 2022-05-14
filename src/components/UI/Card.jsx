@@ -25,7 +25,7 @@ const Back = styled(motion.div)`
 export const Card = React.forwardRef(({front, back, face, setFace}, ref) => {
     return (
         <div ref={ref}>
-            <AnimatePresence >
+            <AnimatePresence initial={false}>
             {face 
             ? 
             <BaseCard onClick={() => setFace(p => !p)}
